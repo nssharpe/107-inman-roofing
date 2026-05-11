@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>107.5 Inman St — Roofing Quote Comparison</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: #f5f7fa; color: #1f2937; line-height: 1.5; }
+  header { background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%); color: white; padding: 36px 40px; }
+  header h1 { margin: 0 0 6px 0; font-size: 28px; font-weight: 700; }
+  header p { margin: 0; opacity: 0.85; font-size: 15px; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 32px 24px 60px; }
+  h2 { font-size: 22px; margin: 40px 0 16px; color: #1e3a5f; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; }
+  h3 { color: #1e3a5f; margin: 24px 0 8px; }
+  .price-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 16px; }
+  .card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-top: 4px solid #94a3b8; position: relative; }
+  .card.best { border-top-color: #10b981; }
+  .card.high { border-top-color: #ef4444; }
+  .card .vendor { font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; font-weight: 600; }
+  .card .price { font-size: 28px; font-weight: 700; margin: 8px 0 4px; color: #111827; }
+  .card .sub { font-size: 13px; color: #6b7280; }
+  .card .badge { position: absolute; top: 12px; right: 12px; background: #10b981; color: white; font-size: 10px; padding: 3px 8px; border-radius: 12px; font-weight: 600; letter-spacing: 0.5px; }
+  .card.high .badge { background: #ef4444; }
+  table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-top: 16px; font-size: 14px; }
+  th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid #e5e7eb; }
+  th { background: #f1f5f9; font-weight: 600; color: #1e3a5f; font-size: 13px; }
+  th.feature, td.feature { width: 220px; background: #f8fafc; font-weight: 600; color: #334155; }
+  th.feature { background: #e2e8f0; }
+  tr:last-child td { border-bottom: none; }
+  .yes { color: #059669; font-weight: 600; }
+  .no { color: #dc2626; font-weight: 600; }
+  .partial { color: #d97706; font-weight: 600; }
+  .callout { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px 20px; border-radius: 6px; margin: 16px 0; }
+  .callout h3 { margin: 0 0 8px; color: #92400e; font-size: 16px; }
+  .callout ul { margin: 6px 0 0; padding-left: 20px; }
+  .recommendation { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-left: 4px solid #10b981; padding: 20px 24px; border-radius: 8px; margin-top: 32px; }
+  .recommendation h2 { border: none; margin-top: 0; color: #065f46; }
+  .footer-note { font-size: 12px; color: #6b7280; margin-top: 30px; text-align: center; }
+  .scope-note { font-size: 12px; color: #6b7280; font-style: italic; }
+
+  /* Interactive module */
+  .calculator { background: white; border-radius: 10px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-top: 16px; }
+  .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 20px; }
+  @media (max-width: 700px) { .controls { grid-template-columns: 1fr; } }
+  .control-group { background: #f8fafc; padding: 16px; border-radius: 8px; }
+  .control-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #334155; font-size: 14px; }
+  .slider-row { display: flex; align-items: center; gap: 12px; }
+  input[type=range] { flex: 1; }
+  .slider-val { font-weight: 700; color: #1e3a5f; min-width: 90px; text-align: right; font-size: 15px; }
+  .toggle-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .toggle-btn { flex: 1; padding: 8px 12px; border: 2px solid #cbd5e1; background: white; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; color: #475569; transition: all 0.15s; }
+  .toggle-btn.active { background: #1e3a5f; color: white; border-color: #1e3a5f; }
+  .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .result-card { background: #f1f5f9; border-radius: 8px; padding: 14px; border-left: 4px solid #94a3b8; }
+  .result-card.rank-1 { border-left-color: #10b981; background: #ecfdf5; }
+  .result-card.rank-4 { border-left-color: #ef4444; }
+  .result-vendor { font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; font-weight: 600; }
+  .result-price { font-size: 22px; font-weight: 700; color: #111827; margin: 4px 0; }
+  .result-detail { font-size: 12px; color: #64748b; }
+  .calc-note { font-size: 12px; color: #6b7280; margin-top: 14px; font-style: italic; padding-top: 12px; border-top: 1px solid #e5e7eb; }
+</style>
+</head>
+<body>
+<header>
+  <h1>107.5 Inman St — Roof Replacement Quote Comparison</h1>
+  <p>Flat EPDM/TPO membrane roof replacement (top roof + front entryway). Prepared May 11, 2026.</p>
+</header>
+
+<div class="container">
+
+  <h2>Top-Line Pricing — Including Skylights (cost if available)</h2>
+  <div class="price-cards">
+    <div class="card best">
+      <span class="badge">LOWEST</span>
+      <div class="vendor">GF Sprague</div>
+      <div class="price">$23,947.43</div>
+      <div class="sub">$22,157.91 base + $1,789.52 skylight add-on</div>
+    </div>
+    <div class="card">
+      <div class="vendor">RB Farina</div>
+      <div class="price">$28,240.78</div>
+      <div class="sub">Skylights included<br>($2,155.78 of total)</div>
+    </div>
+    <div class="card">
+      <div class="vendor">Ranch Roofing</div>
+      <div class="price">$31,152.00</div>
+      <div class="sub">Skylights included<br>(not separately itemized)</div>
+    </div>
+    <div class="card high">
+      <span class="badge">HIGHEST</span>
+      <div class="vendor">Global Roofing</div>
+      <div class="price">$42,091.21</div>
+      <div class="sub">Skylights not mentioned in quote<br>TPO material; −$5K w/ EverGreen Solar</div>
+    </div>
+  </div>
+
+  <h2>Side-by-Side: With vs. Without Skylights</h2>
+  <p>Each vendor handles skylight replacement differently. Here's both scenarios — replacing the 2 existing skylights with new Velux units, or keeping the existing ones.</p>
+  <table>
+    <thead>
+      <tr>
+        <th class="feature">Vendor</th>
+        <th>Skylight cost (2 units)</th>
+        <th>All-in WITH new skylights</th>
+        <th>WITHOUT new skylights</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="feature">GF Sprague</td>
+        <td>$1,789.52<br><span class="scope-note">($894.76 × 2, curb-mounted fixed Velux)</span></td>
+        <td><strong>$23,947.43</strong></td>
+        <td><strong>$22,157.91</strong></td>
+      </tr>
+      <tr>
+        <td class="feature">RB Farina</td>
+        <td>$2,155.78<br><span class="scope-note">($1,077.89 × 2, Velux FCM3434 w/ solar blinds)</span></td>
+        <td><strong>$28,240.78</strong></td>
+        <td><strong>$26,084.99</strong></td>
+      </tr>
+      <tr>
+        <td class="feature">Ranch Roofing</td>
+        <td>$1,402.00<br><span class="scope-note">($701 × 2, Velux FCM 4646 w/ integrated solar blinds — per email)</span></td>
+        <td><strong>$31,152.00</strong></td>
+        <td><strong>$29,750.00</strong></td>
+      </tr>
+      <tr>
+        <td class="feature">Global Roofing</td>
+        <td class="no">Not mentioned in quote</td>
+        <td><strong>$42,091.21</strong></td>
+        <td>$42,091.21</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="scope-note" style="margin-top: 10px;">Note: Ranch's and Farina's skylights are Velux units with solar blinds; GF Sprague's $894.76/unit is for fixed curb-mounted Velux without blinds. If you want solar blinds from GF Sprague, that would add cost. Whether each quote includes skylights in the base price or breaks them out is just a matter of how the quote is structured — not a scope gap.</p>
+
+  <h2>🧮 Rot Replacement Cost Calculator</h2>
+  <p>When the existing roof is stripped, some boards/decking may need to be replaced. Each vendor handles this differently. Use the slider below to see how rot discovery affects the bottom line.</p>
+
+  <div class="calculator">
+    <div class="controls">
+      <div class="control-group">
+        <label>Roof size (sq ft)</label>
+        <div class="slider-row">
+          <input type="range" id="roofSize" min="500" max="2000" step="50" value="1000">
+          <span class="slider-val" id="roofSizeVal">1,000 sq ft</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label>% of roof needing rot replacement</label>
+        <div class="slider-row">
+          <input type="range" id="rotPct" min="0" max="100" step="1" value="0">
+          <span class="slider-val" id="rotPctVal">0%</span>
+        </div>
+      </div>
+    </div>
+    <div class="control-group" style="margin-bottom: 20px;">
+      <label>Include new skylights?</label>
+      <div class="toggle-group">
+        <button class="toggle-btn active" data-skylights="true" onclick="setSkylights(true)">Yes — replace both</button>
+        <button class="toggle-btn" data-skylights="false" onclick="setSkylights(false)">No — keep existing</button>
+      </div>
+    </div>
+
+    <div class="results-grid" id="results"></div>
+
+    <div class="calc-note">
+      <strong>How the math works:</strong>
+      GF Sprague: 3 boards (~24 sq ft) free, then $14/sq ft; capped at $4,027.56 if full deck replacement is needed (cap kicks in around ~290 sq ft of rot).
+      RB Farina: 1 sheet (32 sq ft) free, then $110 per 32-sq-ft sheet of ¾" plywood (~$3.44/sq ft).
+      Ranch Roofing: 64 sq ft free, then $4/sq ft.
+      Global Roofing: $10/linear ft of decking ≈ $10/sq ft (approximate; quoted per LF).
+      Ranch's "without skylights" total is unavailable since they didn't itemize — shown as their full quote, but the actual savings would lower it.
+    </div>
+  </div>
+
+  <div class="callout">
+    <h3>⚠️ Still to confirm with GF Sprague (per Nate)</h3>
+    <ul>
+      <li>Is the EPDM <strong>reinforced</strong>? GF Sprague's quote explicitly says non-reinforced Mule-Hide. <strong>Ranch and RB Farina don't specify either way</strong> — worth asking all three so we're comparing the same thing.</li>
+      <li>What <strong>manufacturer/system warranty</strong> is included? (Ranch includes 20-year Elevate Red Shield Full System; Farina and GF Sprague don't state a mfg warranty.)</li>
+    </ul>
+  </div>
+
+  <h2>Detailed Feature Comparison</h2>
+  <table>
+    <thead>
+      <tr>
+        <th class="feature">Item</th>
+        <th>GF Sprague</th>
+        <th>RB Farina</th>
+        <th>Ranch Roofing</th>
+        <th>Global Roofing</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="feature">Total (as quoted)</td>
+        <td><strong>$22,157.91</strong></td>
+        <td><strong>$28,240.78</strong></td>
+        <td><strong>$31,152.00</strong></td>
+        <td><strong>$42,091.21</strong></td>
+      </tr>
+      <tr>
+        <td class="feature">Skylight cost (2 Velux)</td>
+        <td>$1,789.52 (broken out as add-on)</td>
+        <td>$2,155.78 (in base; w/ solar blinds)</td>
+        <td>$1,402.00 (in base; w/ solar blinds, per email)</td>
+        <td class="no">Not mentioned in quote</td>
+      </tr>
+      <tr>
+        <td class="feature">Membrane</td>
+        <td>Mule-Hide EPDM, <span class="partial">non-reinforced</span> (explicitly stated), fully adhered</td>
+        <td>60-mil EPDM, fully adhered <span class="scope-note">(reinforced vs non-reinforced not specified)</span></td>
+        <td>Elevate .060 EPDM, fully adhered <span class="scope-note">(reinforced vs non-reinforced not specified)</span></td>
+        <td>Carlisle Sure-Weld <span class="partial">TPO .060</span> (different material)</td>
+      </tr>
+      <tr>
+        <td class="feature">Insulation / Cover Board</td>
+        <td>1 layer ISO board</td>
+        <td>½" HD Polyiso cover board</td>
+        <td>½" HD Polyiso cover board</td>
+        <td>2 layers of 2.6" Iso-Board (full code-compliant insulation)</td>
+      </tr>
+      <tr>
+        <td class="feature">Roof Drain</td>
+        <td class="yes">✓ New 3×4 drain</td>
+        <td class="yes">✓ 3" Hercules retrofit w/ tapered sump</td>
+        <td class="yes">✓ New single-piece, licensed plumber</td>
+        <td class="partial">Not itemized</td>
+      </tr>
+      <tr>
+        <td class="feature">Workmanship Warranty</td>
+        <td>"Forever-Whoever" (lifetime, workmanship only)</td>
+        <td>15 years</td>
+        <td>15 years</td>
+        <td>Not specified</td>
+      </tr>
+      <tr>
+        <td class="feature">System/Mfg Warranty</td>
+        <td class="partial">Not stated</td>
+        <td class="partial">Not stated</td>
+        <td class="yes">20-yr Elevate Red Shield Full System</td>
+        <td class="yes">20-yr Carlisle system</td>
+      </tr>
+      <tr>
+        <td class="feature">Rot Allowance</td>
+        <td>3 boards (~24 sf) free; $14/sf<br>Full deck: $4,027.56</td>
+        <td>32 LF / 1 sheet free; $110/sheet, $6.50/LF</td>
+        <td class="yes">64 sf / 64 LF free; $4/sf</td>
+        <td>$10/LF</td>
+      </tr>
+      <tr>
+        <td class="feature">Crane / Access</td>
+        <td class="yes">✓ Included ($2,666.60)</td>
+        <td class="partial">Not specified</td>
+        <td class="partial">Not specified</td>
+        <td class="partial">Not specified</td>
+      </tr>
+      <tr>
+        <td class="feature">Permits</td>
+        <td>Billed at cost</td>
+        <td>Customer reimburses</td>
+        <td>Customer reimburses</td>
+        <td class="yes">✓ Included</td>
+      </tr>
+      <tr>
+        <td class="feature">HVAC Coordination</td>
+        <td class="no">Not included</td>
+        <td class="no">Not included (homeowner hires HVAC)</td>
+        <td class="partial">Not mentioned</td>
+        <td class="partial">Not mentioned</td>
+      </tr>
+      <tr>
+        <td class="feature">Annual Drone Inspection</td>
+        <td>—</td>
+        <td>—</td>
+        <td class="yes">✓ 5 years included</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td class="feature">Payment Terms</td>
+        <td>1/3 down, 2/3 on completion</td>
+        <td>33% / 33% / 34%</td>
+        <td>1/3 / 1/3 / 1/3 — 3.5% cash discount included</td>
+        <td>10% / 30% / 50% / 10%</td>
+      </tr>
+      <tr>
+        <td class="feature">MA HIC #</td>
+        <td>#211004</td>
+        <td>#174723 (CSL #114674)</td>
+        <td>#184728</td>
+        <td>#193875</td>
+      </tr>
+      <tr>
+        <td class="feature">Years in Business</td>
+        <td>55+ years</td>
+        <td>Since 1984 (40+ yrs)</td>
+        <td>Arlington-based, established</td>
+        <td>25+ years</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="recommendation">
+    <h2>Recommendation</h2>
+    <p style="margin:0 0 10px"><strong>GF Sprague is the lowest-cost option</strong> even after adding skylights (~$23,947 vs. $28,241 for RB Farina and $31,152 for Ranch). They're also the largest/oldest firm of the four.</p>
+    <p style="margin:0 0 10px"><strong>Open questions for GF Sprague:</strong> reinforced EPDM availability, Mule-Hide manufacturer warranty length, and an updated quote with skylights included.</p>
+    <p style="margin:0"><strong>RB Farina is the strong backup</strong> — local Arlington shop since 1984, includes everything (skylights, new drain w/ tapered sump for ponding, HVAC coordination called out explicitly), at ~$4K more than the adjusted GF Sprague price.</p>
+  </div>
+
+  <p class="footer-note">Prepared for 107–109 Inman St Condo Association · May 11, 2026</p>
+</div>
+
+<script>
+  const QUOTES = {
+    sprague:   { name: "GF Sprague",     baseNoSky: 22157.91, skylightCost: 1789.52, freeRot: 24,  perSqft: 14.00, cap: 4027.56, color: "green" },
+    farina:    { name: "RB Farina",      baseNoSky: 26084.99, skylightCost: 2155.78, freeRot: 32,  perSqft: 110/32, cap: null },
+    ranch:     { name: "Ranch Roofing",  baseNoSky: 29750.00, skylightCost: 1402.00, freeRot: 64,  perSqft: 4.00,  cap: null },
+    global:    { name: "Global Roofing", baseNoSky: 42091.21, skylightCost: 0,       freeRot: 0,   perSqft: 10.00, cap: null }
+  };
+
+  let includeSkylights = true;
+
+  function setSkylights(val) {
+    includeSkylights = val;
+    document.querySelectorAll('.toggle-btn').forEach(b => {
+      b.classList.toggle('active', (b.dataset.skylights === 'true') === val);
+    });
+    recalc();
+  }
+
+  function calcRotCost(q, rotSqft) {
+    const billable = Math.max(0, rotSqft - q.freeRot);
+    let cost = billable * q.perSqft;
+    if (q.cap !== null) cost = Math.min(cost, q.cap);
+    return cost;
+  }
+
+  function fmt(n) { return "$" + n.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}); }
+
+  function recalc() {
+    const roof = +document.getElementById('roofSize').value;
+    const pct = +document.getElementById('rotPct').value;
+    const rotSqft = roof * pct / 100;
+    document.getElementById('roofSizeVal').textContent = roof.toLocaleString() + ' sq ft';
+    document.getElementById('rotPctVal').textContent = pct + '% (' + Math.round(rotSqft) + ' sq ft)';
+
+    const results = [];
+    for (const key in QUOTES) {
+      const q = QUOTES[key];
+      const base = q.baseNoSky + (includeSkylights ? q.skylightCost : 0);
+      const note = includeSkylights ? "Skylights included" : "No new skylights";
+      const rotCost = calcRotCost(q, rotSqft);
+      const total = base + rotCost;
+      results.push({ key, name: q.name, base, rotCost, total, note });
+    }
+    results.sort((a, b) => a.total - b.total);
+
+    const container = document.getElementById('results');
+    container.innerHTML = results.map((r, i) => `
+      <div class="result-card rank-${i+1}">
+        <div class="result-vendor">${i === 0 ? '🏆 ' : ''}${r.name}</div>
+        <div class="result-price">${fmt(r.total)}</div>
+        <div class="result-detail">
+          Base: ${fmt(r.base)}<br>
+          + Rot: ${fmt(r.rotCost)}<br>
+          <span style="color:#94a3b8">${r.note}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('roofSize').addEventListener('input', recalc);
+  document.getElementById('rotPct').addEventListener('input', recalc);
+  recalc();
+</script>
+</body>
+</html>

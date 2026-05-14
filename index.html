@@ -10,7 +10,6 @@
   header h1 { margin: 0 0 6px 0; font-size: 28px; font-weight: 700; }
   header p { margin: 0; opacity: 0.85; font-size: 15px; }
 
-  /* Tabs */
   .tabs { background: #1e3a5f; padding: 0 40px; display: flex; gap: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 10; }
   .tab { padding: 14px 24px; background: transparent; color: rgba(255,255,255,0.65); border: none; cursor: pointer; font-size: 15px; font-weight: 600; border-bottom: 3px solid transparent; transition: all 0.15s; font-family: inherit; }
   .tab:hover { color: rgba(255,255,255,0.9); }
@@ -47,12 +46,13 @@
   .callout ul { margin: 6px 0 0; padding-left: 20px; }
   .callout.info { background: #dbeafe; border-left-color: #2563eb; }
   .callout.info h3 { color: #1e40af; }
-  .recommendation { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-left: 4px solid #10b981; padding: 20px 24px; border-radius: 8px; margin-top: 32px; }
+  .recommendation { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-left: 4px solid #10b981; padding: 20px 24px; border-radius: 8px; margin-top: 24px; }
   .recommendation h2 { border: none; margin-top: 0; color: #065f46; }
+  .recommendation.strong { background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); padding: 24px 28px; border-left-width: 6px; }
+  .recommendation.strong h2 { font-size: 24px; }
   .footer-note { font-size: 12px; color: #6b7280; margin-top: 30px; text-align: center; }
   .scope-note { font-size: 12px; color: #6b7280; font-style: italic; }
 
-  /* Calculator */
   .calculator { background: white; border-radius: 10px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-top: 16px; }
   .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 20px; }
   @media (max-width: 700px) { .controls { grid-template-columns: 1fr; } }
@@ -73,24 +73,20 @@
   .result-detail { font-size: 12px; color: #64748b; }
   .calc-note { font-size: 12px; color: #6b7280; margin-top: 14px; font-style: italic; padding-top: 12px; border-top: 1px solid #e5e7eb; }
 
-  /* Solar-specific */
   .tier { background: white; border-radius: 10px; padding: 18px 22px; margin-top: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #94a3b8; }
   .tier.frontrunner { border-left-color: #10b981; }
   .tier.budget { border-left-color: #3b82f6; }
   .tier.contention { border-left-color: #6366f1; }
-  .tier.caution { border-left-color: #f59e0b; }
   .tier.out { border-left-color: #94a3b8; opacity: 0.85; }
   .tier h3 { margin: 0 0 8px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
   .tier.frontrunner h3 { color: #047857; }
   .tier.budget h3 { color: #1e40af; }
   .tier.contention h3 { color: #4338ca; }
-  .tier.caution h3 { color: #92400e; }
   .tier.out h3 { color: #475569; }
   .tier p { margin: 6px 0; font-size: 14px; }
   .table-scroll { overflow-x: auto; margin-top: 16px; }
-  .table-scroll table { min-width: 1100px; margin-top: 0; }
+  .table-scroll table { min-width: 1000px; margin-top: 0; }
 
-  /* Production bar chart */
   .prod-chart { background: white; border-radius: 10px; padding: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-top: 16px; }
   .prod-row { display: grid; grid-template-columns: 180px 1fr 100px; align-items: center; gap: 12px; padding: 6px 0; font-size: 13px; }
   .prod-name { font-weight: 600; color: #334155; }
@@ -102,12 +98,23 @@
   details { background: white; border-radius: 8px; padding: 12px 18px; margin-top: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
   details summary { cursor: pointer; font-weight: 600; color: #1e3a5f; padding: 4px 0; }
   details[open] summary { margin-bottom: 8px; }
+
+  /* Unit cost split */
+  .split-table { width: 100%; margin-top: 16px; }
+  .split-table th, .split-table td { text-align: right; }
+  .split-table th:first-child, .split-table td:first-child { text-align: left; }
+  .split-table tfoot td { font-weight: 700; background: #f1f5f9; border-top: 2px solid #cbd5e1; }
+  .opt-out { color: #94a3b8; font-style: italic; }
+  .opt-out td:not(:first-child) { text-decoration: line-through; }
+  .unit-checkboxes { display: flex; gap: 16px; flex-wrap: wrap; margin: 8px 0 16px; background: #f8fafc; padding: 14px 18px; border-radius: 8px; }
+  .unit-checkboxes label { display: flex; align-items: center; gap: 6px; font-size: 14px; cursor: pointer; }
+  .unit-checkboxes input[type=checkbox] { width: 16px; height: 16px; cursor: pointer; }
 </style>
 </head>
 <body>
 <header>
   <h1>107.5 Inman St — Quote Comparisons</h1>
-  <p>Side-by-side review of contractor quotes for the condo association. Prepared May 11, 2026.</p>
+  <p>Side-by-side review of contractor quotes for the condo association. Updated May 13, 2026.</p>
 </header>
 
 <nav class="tabs">
@@ -119,118 +126,62 @@
 <div id="tab-roofing" class="tab-content active">
 <div class="container">
 
-  <h2>Top-Line Pricing — Including Skylights (cost if available)</h2>
+  <div class="recommendation strong">
+    <h2>✅ Recommendation: Move forward with GF Sprague</h2>
+    <p style="margin: 0 0 10px"><strong>GF Sprague is our pick</strong> — lowest price, strong warranties (15-yr Mule-Hide product + lifetime "Forever-Whoever" workmanship warranty, transferable to future owners), the most knowledgeable team we spoke with, and they come recommended by an acquaintance of Mo's.</p>
+    <p style="margin: 0 0 10px">On the membrane spec question: GF Sprague explained that <strong>non-reinforced EPDM is actually the right call for New England</strong> — it handles seasonal thermal expansion/contraction better than reinforced. That's almost certainly why Ranch and Farina spec'd the same.</p>
+    <p style="margin: 0"><strong>All-in price: $24,446.21</strong>, which includes the 2 skylight replacements and the front gutter/downspout replacement they flagged during inspection.</p>
+  </div>
+
+  <h2>Top-Line Pricing — All-In Cost</h2>
   <div class="price-cards">
     <div class="card best">
-      <span class="badge">LOWEST</span>
+      <span class="badge">RECOMMENDED</span>
       <div class="vendor">GF Sprague</div>
-      <div class="price">$23,947.43</div>
-      <div class="sub">$22,157.91 base + $1,789.52 skylight add-on</div>
+      <div class="price">$24,446.21</div>
+      <div class="sub">$22,157.91 roof + $1,789.52 skylights + $498.78 front gutter/downspout</div>
     </div>
     <div class="card">
       <div class="vendor">RB Farina</div>
       <div class="price">$28,240.78</div>
-      <div class="sub">Skylights included<br>($2,155.78 of total)</div>
+      <div class="sub">Skylights included<br>(no gutter replacement quoted)</div>
     </div>
     <div class="card">
       <div class="vendor">Ranch Roofing</div>
       <div class="price">$31,152.00</div>
-      <div class="sub">Skylights included<br>(not separately itemized)</div>
+      <div class="sub">Skylights included<br>(no gutter replacement quoted)</div>
     </div>
     <div class="card high">
       <span class="badge">HIGHEST</span>
       <div class="vendor">Global Roofing</div>
       <div class="price">$42,091.21</div>
-      <div class="sub">Skylights not mentioned in quote<br>TPO material; −$5K w/ EverGreen Solar</div>
+      <div class="sub">Skylights not mentioned<br>TPO material; −$5K w/ EverGreen Solar</div>
     </div>
   </div>
+  <p class="scope-note" style="margin-top: 10px;">GF Sprague is the only quote that also includes the front gutter/downspout replacement ($498.78). Comparing roof + skylights only: GF Sprague $23,947.43 vs RB Farina $28,240.78 vs Ranch $31,152.00.</p>
 
-  <h2>Side-by-Side: With vs. Without Skylights</h2>
-  <p>Each vendor handles skylight replacement differently. Here's both scenarios — replacing the 2 existing skylights with new Velux units, or keeping the existing ones.</p>
-  <table>
+  <h2>💰 Cost Breakdown by Unit (GF Sprague — $24,446.21)</h2>
+  <p>Roof is a shared common element. Costs split according to each unit's percentage interest in common elements per Exhibit C of the Master Deed.</p>
+  <table class="split-table">
     <thead>
       <tr>
-        <th class="feature">Vendor</th>
-        <th>Skylight cost (2 units)</th>
-        <th>All-in WITH new skylights</th>
-        <th>WITHOUT new skylights</th>
+        <th>Unit</th>
+        <th>Ownership %</th>
+        <th>Share of Cost</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="feature">GF Sprague</td>
-        <td>$1,789.52<br><span class="scope-note">($894.76 × 2, curb-mounted fixed Velux)</span></td>
-        <td><strong>$23,947.43</strong></td>
-        <td><strong>$22,157.91</strong></td>
-      </tr>
-      <tr>
-        <td class="feature">RB Farina</td>
-        <td>$2,155.78<br><span class="scope-note">($1,077.89 × 2, Velux FCM3434 w/ solar blinds)</span></td>
-        <td><strong>$28,240.78</strong></td>
-        <td><strong>$26,084.99</strong></td>
-      </tr>
-      <tr>
-        <td class="feature">Ranch Roofing</td>
-        <td>$1,402.00<br><span class="scope-note">($701 × 2, Velux FCM 4646 w/ integrated solar blinds — per email)</span></td>
-        <td><strong>$31,152.00</strong></td>
-        <td><strong>$29,750.00</strong></td>
-      </tr>
-      <tr>
-        <td class="feature">Global Roofing</td>
-        <td class="no">Not mentioned in quote</td>
-        <td><strong>$42,091.21</strong></td>
-        <td>$42,091.21</td>
-      </tr>
+      <tr><td>107½ Unit 1</td><td>20.66%</td><td>$5,050.59</td></tr>
+      <tr><td>107½ Unit 2</td><td>17.57%</td><td>$4,295.20</td></tr>
+      <tr><td>107½ Unit 3</td><td>20.27%</td><td>$4,955.25</td></tr>
+      <tr><td>109 Unit 1</td><td>16.41%</td><td>$4,011.62</td></tr>
+      <tr><td>109 Unit 2</td><td>25.10%</td><td>$6,136.00</td></tr>
     </tbody>
+    <tfoot>
+      <tr><td>Total</td><td>100.01%*</td><td>$24,448.66*</td></tr>
+    </tfoot>
   </table>
-  <p class="scope-note" style="margin-top: 10px;">Note: Ranch's and Farina's skylights are Velux units with solar blinds; GF Sprague's $894.76/unit is for fixed curb-mounted Velux without blinds. If you want solar blinds from GF Sprague, that would add cost. Whether each quote includes skylights in the base price or breaks them out is just a matter of how the quote is structured — not a scope gap.</p>
-
-  <h2>🧮 Rot Replacement Cost Calculator</h2>
-  <p>When the existing roof is stripped, some boards/decking may need to be replaced. Each vendor handles this differently. Use the slider below to see how rot discovery affects the bottom line.</p>
-
-  <div class="calculator">
-    <div class="controls">
-      <div class="control-group">
-        <label>Roof size (sq ft)</label>
-        <div class="slider-row">
-          <input type="range" id="roofSize" min="500" max="2000" step="50" value="1000">
-          <span class="slider-val" id="roofSizeVal">1,000 sq ft</span>
-        </div>
-      </div>
-      <div class="control-group">
-        <label>% of roof needing rot replacement</label>
-        <div class="slider-row">
-          <input type="range" id="rotPct" min="0" max="100" step="1" value="0">
-          <span class="slider-val" id="rotPctVal">0%</span>
-        </div>
-      </div>
-    </div>
-    <div class="control-group" style="margin-bottom: 20px;">
-      <label>Include new skylights?</label>
-      <div class="toggle-group">
-        <button class="toggle-btn active" data-skylights="true" onclick="setSkylights(true)">Yes — replace both</button>
-        <button class="toggle-btn" data-skylights="false" onclick="setSkylights(false)">No — keep existing</button>
-      </div>
-    </div>
-
-    <div class="results-grid" id="results"></div>
-
-    <div class="calc-note">
-      <strong>How the math works:</strong>
-      GF Sprague: 3 boards (~24 sq ft) free, then $14/sq ft; capped at $4,027.56 if full deck replacement is needed (cap kicks in around ~290 sq ft of rot).
-      RB Farina: 1 sheet (32 sq ft) free, then $110 per 32-sq-ft sheet of ¾" plywood (~$3.44/sq ft).
-      Ranch Roofing: 64 sq ft free, then $4/sq ft.
-      Global Roofing: $10/linear ft of decking ≈ $10/sq ft (approximate; quoted per LF).
-    </div>
-  </div>
-
-  <div class="callout">
-    <h3>⚠️ Still to confirm with GF Sprague</h3>
-    <ul>
-      <li>Is the EPDM <strong>reinforced</strong>? GF Sprague's quote explicitly says non-reinforced Mule-Hide. <strong>Ranch and RB Farina don't specify either way</strong> — worth asking all three so we're comparing the same thing.</li>
-      <li>What <strong>manufacturer/system warranty</strong> is included? (Ranch includes 20-year Elevate Red Shield Full System; Farina and GF Sprague don't state a mfg warranty.)</li>
-    </ul>
-  </div>
+  <p class="scope-note" style="margin-top: 8px;">*Percentages in Exhibit C sum to 100.01% due to rounding; per-unit shares above use the stated percentages directly, producing a $2.45 over-total versus the actual quote of $24,446.21. We can adjust to exactly equal $24,446.21 at signing.</p>
 
   <h2>Detailed Feature Comparison</h2>
   <table>
@@ -245,24 +196,17 @@
     </thead>
     <tbody>
       <tr>
-        <td class="feature">Total (as quoted)</td>
-        <td><strong>$22,157.91</strong></td>
-        <td><strong>$28,240.78</strong></td>
-        <td><strong>$31,152.00</strong></td>
+        <td class="feature">All-in total</td>
+        <td class="yes"><strong>$24,446.21</strong> (incl. skylights + gutter)</td>
+        <td><strong>$28,240.78</strong> (incl. skylights)</td>
+        <td><strong>$31,152.00</strong> (incl. skylights)</td>
         <td><strong>$42,091.21</strong></td>
       </tr>
       <tr>
-        <td class="feature">Skylight cost (2 Velux)</td>
-        <td>$1,789.52 (broken out as add-on)</td>
-        <td>$2,155.78 (in base; w/ solar blinds)</td>
-        <td>$1,402.00 (in base; w/ solar blinds, per email)</td>
-        <td class="no">Not mentioned in quote</td>
-      </tr>
-      <tr>
         <td class="feature">Membrane</td>
-        <td>Mule-Hide EPDM, <span class="partial">non-reinforced</span> (explicitly stated), fully adhered</td>
-        <td>60-mil EPDM, fully adhered <span class="scope-note">(reinforced vs non-reinforced not specified)</span></td>
-        <td>Elevate .060 EPDM, fully adhered <span class="scope-note">(reinforced vs non-reinforced not specified)</span></td>
+        <td>Mule-Hide EPDM, non-reinforced, fully adhered</td>
+        <td>60-mil EPDM, fully adhered</td>
+        <td>Elevate .060 EPDM, fully adhered</td>
         <td>Carlisle Sure-Weld <span class="partial">TPO .060</span> (different material)</td>
       </tr>
       <tr>
@@ -281,21 +225,21 @@
       </tr>
       <tr>
         <td class="feature">Workmanship Warranty</td>
-        <td>"Forever-Whoever" (lifetime, workmanship only)</td>
+        <td class="yes">"Forever-Whoever" — lifetime, transferable to future owners</td>
         <td>15 years</td>
         <td>15 years</td>
         <td>Not specified</td>
       </tr>
       <tr>
-        <td class="feature">System/Mfg Warranty</td>
-        <td class="partial">Not stated</td>
+        <td class="feature">Product / Mfg Warranty</td>
+        <td class="yes">15 years Mule-Hide product warranty (manufacturing defects + weathering)</td>
         <td class="partial">Not stated</td>
         <td class="yes">20-yr Elevate Red Shield Full System</td>
         <td class="yes">20-yr Carlisle system</td>
       </tr>
       <tr>
         <td class="feature">Rot Allowance</td>
-        <td>3 boards (~24 sf) free; $14/sf<br>Full deck: $4,027.56</td>
+        <td>3 boards (~24 sf) free; $14/sf<br>Full deck cap: $4,027.56</td>
         <td>32 LF / 1 sheet free; $110/sheet, $6.50/LF</td>
         <td class="yes">64 sf / 64 LF free; $4/sf</td>
         <td>$10/LF</td>
@@ -322,11 +266,11 @@
         <td class="partial">Not mentioned</td>
       </tr>
       <tr>
-        <td class="feature">Annual Drone Inspection</td>
-        <td>—</td>
-        <td>—</td>
-        <td class="yes">✓ 5 years included</td>
-        <td>—</td>
+        <td class="feature">Front Gutter/Downspout</td>
+        <td class="yes">✓ Included ($498.78)</td>
+        <td class="no">Not included</td>
+        <td class="no">Not included</td>
+        <td class="no">Not included</td>
       </tr>
       <tr>
         <td class="feature">Payment Terms</td>
@@ -352,11 +296,41 @@
     </tbody>
   </table>
 
-  <div class="recommendation">
-    <h2>Recommendation</h2>
-    <p style="margin:0 0 10px"><strong>GF Sprague is the lowest-cost option</strong> even after adding skylights (~$23,947 vs. $28,241 for RB Farina and $31,152 for Ranch). They're also the largest/oldest firm of the four.</p>
-    <p style="margin:0 0 10px"><strong>Open questions for GF Sprague:</strong> reinforced EPDM availability, Mule-Hide manufacturer warranty length, and an updated quote with skylights included.</p>
-    <p style="margin:0"><strong>RB Farina is the strong backup</strong> — local Arlington shop since 1984, includes everything (skylights, new drain w/ tapered sump for ponding, HVAC coordination called out explicitly), at ~$4K more than the adjusted GF Sprague price.</p>
+  <h2>🧮 Rot Replacement Cost Calculator</h2>
+  <p>When the existing roof is stripped, some boards/decking may need to be replaced. Each vendor handles this differently. Use the slider to see how rot discovery affects the total.</p>
+  <div class="calculator">
+    <div class="controls">
+      <div class="control-group">
+        <label>Roof size (sq ft)</label>
+        <div class="slider-row">
+          <input type="range" id="roofSize" min="500" max="2000" step="50" value="1000">
+          <span class="slider-val" id="roofSizeVal">1,000 sq ft</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label>% of roof needing rot replacement</label>
+        <div class="slider-row">
+          <input type="range" id="rotPct" min="0" max="100" step="1" value="0">
+          <span class="slider-val" id="rotPctVal">0%</span>
+        </div>
+      </div>
+    </div>
+    <div class="control-group" style="margin-bottom: 20px;">
+      <label>Include new skylights?</label>
+      <div class="toggle-group">
+        <button class="toggle-btn active" data-skylights="true" onclick="setSkylights(true)">Yes — replace both</button>
+        <button class="toggle-btn" data-skylights="false" onclick="setSkylights(false)">No — keep existing</button>
+      </div>
+    </div>
+    <div class="results-grid" id="results"></div>
+    <div class="calc-note">
+      <strong>How the math works:</strong>
+      GF Sprague: 3 boards (~24 sq ft) free, then $14/sq ft; capped at $4,027.56 for full deck.
+      RB Farina: 1 sheet (32 sq ft) free, then $110 per sheet (~$3.44/sq ft).
+      Ranch: 64 sq ft free, then $4/sq ft.
+      Global: $10/LF ≈ $10/sq ft.
+      GF Sprague total here excludes the front gutter add-on ($498.78) to keep comparison apples-to-apples.
+    </div>
   </div>
 
 </div>
@@ -366,92 +340,85 @@
 <div id="tab-solar" class="tab-content">
 <div class="container">
 
-  <h2>Solar Installation — Quote Landscape</h2>
-  <p>We received 10 solar quotes for a ~15-panel system on the shared 107/109 Inman roof. Cash prices range from <strong>$19,602 (Brightway)</strong> to <strong>$53,210 (Rooftop Power)</strong>. After filtering for in-house installers, reasonable production estimates, and credible warranties, four front-runners emerge.</p>
+  <div class="recommendation strong">
+    <h2>🌞 Down to two: Boston Solar vs. Great Sky Solar</h2>
+    <p style="margin: 0 0 10px">After reviewing 10 quotes, two front-runners stand out — both around <strong>$21,000</strong>, both with premium equipment, both with the Solar Insure 30-year whole-system warranty. The decision comes down to <strong>which team you'd rather work with for the next 30 years</strong>.</p>
+    <p style="margin: 0"><strong>Looking for input from owners</strong> on whether you agree these are the front-runners — and any final questions that would help us decide between them.</p>
+  </div>
 
-  <h2>Front Runners &amp; Budget Pick</h2>
+  <h2>The Two Front Runners</h2>
   <div class="price-cards">
     <div class="card best">
       <span class="badge">FRONT RUNNER</span>
       <div class="vendor">Boston Solar</div>
       <div class="price">$20,900</div>
-      <div class="sub">REC 460AA + Enphase IQ8X<br>Solar Insure 30-yr + 8,187 kWh est.</div>
+      <div class="sub">REC 460AA + Enphase IQ8X<br>Solar Insure 30-yr + 8,187 kWh est.<br>6,500+ installs · 4.7★ Google (1,350+ reviews)</div>
     </div>
     <div class="card best">
       <span class="badge">FRONT RUNNER</span>
-      <div class="vendor">Great Sky Solar (+Insure)</div>
+      <div class="vendor">Great Sky Solar</div>
       <div class="price">$20,992.50</div>
-      <div class="sub">CW 450 + Enphase IQ8MC<br>Solar Insure 30-yr + 1 mile away</div>
+      <div class="sub">CW 450 + Enphase IQ8MC<br>Solar Insure 30-yr + 7,420 kWh est.<br>1 mile away · 5.0★ across 968 reviews</div>
     </div>
-    <div class="card budget">
-      <span class="badge">BUDGET PICK</span>
-      <div class="vendor">Brightway Energy</div>
-      <div class="price">$19,602</div>
-      <div class="sub">SEG 440 BoB + Enphase IQ8M<br>~$1,400 less; no Solar Insure</div>
-    </div>
-    <div class="card">
-      <div class="vendor">Great Sky (Standard)</div>
-      <div class="price">$20,318</div>
-      <div class="sub">Same as +Insure minus the 30-yr blanket<br>($675 less, 25-yr install warranty)</div>
-    </div>
+  </div>
+
+  <div class="callout info">
+    <h3>📊 Production estimate difference — the key question to probe</h3>
+    <p style="margin: 0;">Boston Solar's 8,187 kWh estimate is ~10% higher than Great Sky's 7,420 kWh on the same roof. Both quote ~6.8 kW systems with similar Enphase microinverters. Worth asking Boston Solar to walk through their Aurora shade model and assumptions, and asking Great Sky why theirs is more conservative.</p>
   </div>
 
   <div class="callout">
-    <h3>⚠️ Important context for unit owners</h3>
+    <h3>⚠️ Important tax / incentive context for unit owners</h3>
     <ul>
-      <li><strong>Federal 30% solar tax credit (25D) expired 12/31/2025.</strong> Systems placed in service in 2026+ do <em>not</em> qualify. Several quotes still show stale federal credit numbers in their financial projections — ignore those.</li>
-      <li><strong>MA Schedule SC credit is per principal residence:</strong> 15% of each owner's share of net cost, capped at $1,000 per unit. With 4 of 5 condo units owner-occupied &amp; eligible, total MA credit lands around <strong>$2,940–$3,312</strong> across the building (under $1k cap at our quote prices).</li>
-      <li><strong>Solar Insure 30-year blanket warranty</strong> covers panels, inverters, racking, labor, AND roof penetrations (within 3" of attachment) with $0 deductible. Critically, it covers <em>installer/manufacturer insolvency</em> — meaningful protection for a 30-year asset. Included in Boston Solar and Great Sky's "+Insure" options.</li>
+      <li><strong>Federal 30% solar tax credit (25D) expired 12/31/2025.</strong> Systems placed in service in 2026+ do not qualify. Several quotes still show stale federal credit numbers — ignore those.</li>
+      <li><strong>MA Schedule SC credit is per principal residence:</strong> 15% of each owner's share of net cost, capped at $1,000 per unit. With 4 of 5 condo units owner-occupied, total MA credit lands around $2,940–$3,312 across the building.</li>
+      <li><strong>Solar Insure 30-year blanket warranty</strong> covers panels, inverters, racking, labor, AND roof penetrations with $0 deductible. Critically, it covers installer/manufacturer insolvency — meaningful protection for a 30-year asset. Included in <em>both</em> front-runner quotes.</li>
     </ul>
   </div>
 
-  <h2>Quote Tiers</h2>
+  <h2>☀️ Cost &amp; Production Breakdown by Unit (≈$21,000 system)</h2>
+  <p>Solar is also a shared common element. Costs and production share the same ownership percentages from Exhibit C. <strong>Tick "Not participating"</strong> for any unit that opts out — costs and production get redistributed among the remaining units in proportion to their ownership.</p>
+  <div class="unit-checkboxes" id="solarUnitCheckboxes"></div>
+  <p class="scope-note" style="margin-top: -8px;">Production assumption: 7,803 kWh year-1 (average of Boston Solar's 8,187 and Great Sky's 7,420 estimates), minus 1,227 kWh for the 107.5 common area, leaving 6,577 kWh to split among unit owners.</p>
+  <table class="split-table">
+    <thead>
+      <tr>
+        <th>Unit</th>
+        <th>Base %</th>
+        <th>Effective Share</th>
+        <th>Cost</th>
+        <th>Year-1 kWh</th>
+      </tr>
+    </thead>
+    <tbody id="solarSplitBody"></tbody>
+    <tfoot>
+      <tr><td>Total</td><td id="solarBaseSum">—</td><td>100.00%</td><td id="solarCostSum">—</td><td id="solarKwhSum">—</td></tr>
+    </tfoot>
+  </table>
 
-  <div class="tier frontrunner">
-    <h3>🏆 Front Runners</h3>
-    <p><strong>Boston Solar — $20,900.</strong> REC 460AA Pure-RX + Enphase IQ8X + Solar Insure 30-yr + 10-yr Boston Solar workmanship + 10-yr production guarantee. Highest production estimate at 8,187 kWh — worth probing methodology vs. competing 7,200–7,500 kWh estimates on the same roof. 6,500+ installs, 4.7/5.0 Google over 1,350+ reviews, 100% in-house crews.</p>
-    <p><strong>Great Sky Solar (+ Solar Insure) — $20,992.50.</strong> Closest installer (1 mile, Lexington), 5.0/5.0 across 968 reviews, never subcontracts. CW 450 panels + Enphase IQ8MC + own 25-yr install warranty + Solar Insure 30-yr. Standard option is $675 less ($20,318) and gives up only the Solar Insure blanket.</p>
-  </div>
+  <h2>The Other Quotes (for context)</h2>
+  <p>For transparency — here's how the other 8 quotes compared. None reached front-runner status for the reasons listed below.</p>
 
   <div class="tier budget">
-    <h3>💰 Budget Pick</h3>
-    <p><strong>Brightway Energy — $19,602.</strong> Lowest gross price by ~$1,400. Small local team (1 mile away), SEG 440 Black-on-Black + Enphase IQ8M, 30-yr panel + 25-yr inverter warranties. EnergySage 5.0 (31) / Google 4.9 (37) — smaller review sample than Great Sky/Boston Solar, so a bit less proven. No Solar Insure-style whole-system warranty. Solid choice if minimizing upfront cost matters most.</p>
+    <h3>💰 Budget Pick (passed over for warranty trade-off)</h3>
+    <p><strong>Brightway Energy — $19,602.</strong> ~$1,400 less than the front runners. Small local team (1 mile away), SEG 440 Black-on-Black + Enphase IQ8M. No Solar Insure-style whole-system warranty, which is a meaningful gap on a 30-year asset.</p>
   </div>
 
   <div class="tier contention">
-    <h3>🤔 Still in Contention</h3>
-    <p><strong>Viridis Energy — $22,080.</strong> 460W REC panels (same as Boston Solar) + Enphase IQ8X. REC ProTrust labor-warranty eligibility hinges on REC Certified Solar Professional status — questions sent. Workmanship warranty not stated; in-house crews.</p>
-  </div>
-
-  <div class="tier caution">
-    <h3>⚠️ Proceed With Caution</h3>
-    <p><strong>Evergreen Solar — $20,769.</strong> Comparable price BUT only 14 panels (6.02 kW) — smaller system than 15-panel quotes from everyone else. Disclaimer in proposal: <em>"not a bid for work, but an estimated loan calculator for the work order that will be provided by the Installation Contractor."</em> Evergreen is a sales/finance arm; the actual install is subcontracted to a third party they haven't named. Before considering, demand: (a) the actual installer's name and reviews, (b) workmanship warranty terms, (c) whether the contract is with Evergreen or the installer (affects warranty enforcement and MA Schedule SC math).</p>
+    <h3>🤔 Considered but Edged Out</h3>
+    <p><strong>Great Sky Solar (Standard) — $20,318.</strong> Same install, $675 less, drops only the Solar Insure 30-yr blanket. Reasonable if you don't value the third-party insolvency coverage.</p>
+    <p><strong>Viridis Energy — $22,080.</strong> Same REC 460AA panels as Boston Solar + Enphase IQ8X. Workmanship warranty not stated; REC ProTrust labor coverage status unclear.</p>
+    <p><strong>Evergreen Solar — $20,769.</strong> Comparable price but only 14 panels (vs 15) AND the install is subcontracted to an unnamed third party. Dropped from contention.</p>
   </div>
 
   <div class="tier out">
     <h3>❌ Out of Contention</h3>
-    <p><strong>All Energy Solar — $25,782</strong> (now incl. SMART, ~$3,844 over 30 yrs). NABCEP-certified, A+ BBB, but ~25% above the front-runners without distinct equipment/warranty advantage.</p>
-    <p><strong>My Generation Energy — $25,870.</strong> Reputable Cape Cod installer (Falmouth, ~60 mi away — service response could be slower). Pricing not competitive vs. closer in-house options.</p>
-    <p><strong>Mass Renewables — $33,850.</strong> 60%+ above front-runners. Tesla string inverter (12.5-yr warranty vs. 25-yr Enphase elsewhere). 95% performance guarantee is unique. Awaiting reply on the price gap.</p>
-    <p><strong>Rooftop Power — $53,210 cash / $23,638 prepaid PPA.</strong> Cash price is an extreme outlier ($7.31/W vs. market $3–3.20/W). 16-panel design with unrealistic 9,465 kWh production claim (1,300 kWh/kW — far above Cambridge reality). PPA-focused sales pitch. Pass.</p>
+    <p><strong>All Energy Solar — $25,782</strong> · <strong>My Generation Energy — $25,870</strong>. Both ~25% above front-runners without distinct equipment/warranty advantage. MGE is 60 mi away (Cape Cod) — slower service response.</p>
+    <p><strong>Mass Renewables — $33,850.</strong> 60%+ above front-runners. Tesla string inverter (12.5-yr warranty vs 25-yr Enphase). 95% performance guarantee is unique but the price premium isn't justified.</p>
+    <p><strong>Rooftop Power — $53,210 cash.</strong> Extreme outlier at $7.31/W vs market $3.00–3.20/W. Unrealistic 9,465 kWh production claim. PPA-focused sales pitch. Pass.</p>
   </div>
 
-  <h2>Year-1 Production Estimate Spread</h2>
-  <p>Same roof, ten different production estimates ranging 6,930–9,465 kWh — a 36% spread. Worth questioning each finalist on their modeling assumptions (shading, soiling, inverter clipping). Boston Solar's high estimate vs Great Sky's lower one on the <em>same roof</em> is the most relevant comparison for the front-runners.</p>
-  <div class="prod-chart">
-    <div class="prod-row"><span class="prod-name">Rooftop Power</span><div class="prod-bar-container"><div class="prod-bar outlier" style="width: 100%"></div></div><span class="prod-val">9,465 kWh ⚠</span></div>
-    <div class="prod-row"><span class="prod-name">Boston Solar</span><div class="prod-bar-container"><div class="prod-bar" style="width: 86.5%"></div></div><span class="prod-val">8,187 kWh</span></div>
-    <div class="prod-row"><span class="prod-name">Mass Renewables</span><div class="prod-bar-container"><div class="prod-bar" style="width: 85.3%"></div></div><span class="prod-val">8,075 kWh</span></div>
-    <div class="prod-row"><span class="prod-name">Viridis Energy</span><div class="prod-bar-container"><div class="prod-bar" style="width: 81.7%"></div></div><span class="prod-val">7,735 kWh</span></div>
-    <div class="prod-row"><span class="prod-name">Evergreen Solar</span><div class="prod-bar-container"><div class="prod-bar" style="width: 80.3%"></div></div><span class="prod-val">7,597 kWh*</span></div>
-    <div class="prod-row"><span class="prod-name">Great Sky (both)</span><div class="prod-bar-container"><div class="prod-bar" style="width: 78.4%"></div></div><span class="prod-val">7,420 kWh</span></div>
-    <div class="prod-row"><span class="prod-name">All Energy Solar</span><div class="prod-bar-container"><div class="prod-bar" style="width: 77.1%"></div></div><span class="prod-val">7,298 kWh</span></div>
-    <div class="prod-row"><span class="prod-name">Brightway Energy</span><div class="prod-bar-container"><div class="prod-bar" style="width: 76.1%"></div></div><span class="prod-val">7,207 kWh</span></div>
-    <div class="prod-row"><span class="prod-name">My Generation Energy</span><div class="prod-bar-container"><div class="prod-bar" style="width: 73.2%"></div></div><span class="prod-val">6,930 kWh</span></div>
-    <p class="scope-note" style="margin-top: 12px;">*Evergreen is a 14-panel system; others are 15-panel. Rooftop Power claim is suspicious for Cambridge solar conditions.</p>
-  </div>
-
-  <h2>Side-by-Side: Top Six Quotes</h2>
+  <h2>Side-by-Side: Five Active Quotes</h2>
   <div class="table-scroll">
   <table>
     <thead>
@@ -459,7 +426,6 @@
         <th class="feature">Attribute</th>
         <th>Brightway</th>
         <th>Great Sky (Std)</th>
-        <th>Evergreen ⚠</th>
         <th>Boston Solar</th>
         <th>Great Sky (+Insure)</th>
         <th>Viridis</th>
@@ -470,25 +436,14 @@
         <td class="feature">Total Cash Price</td>
         <td><strong>$19,602</strong></td>
         <td><strong>$20,318</strong></td>
-        <td><strong>$20,769</strong></td>
-        <td><strong>$20,900</strong></td>
-        <td><strong>$20,992.50</strong></td>
+        <td class="yes"><strong>$20,900</strong></td>
+        <td class="yes"><strong>$20,992.50</strong></td>
         <td><strong>$22,080</strong></td>
-      </tr>
-      <tr>
-        <td class="feature">Net after MA credit (4 units)</td>
-        <td>~$16,662</td>
-        <td>~$17,270</td>
-        <td>~$17,653</td>
-        <td>~$17,764</td>
-        <td>~$17,845</td>
-        <td>~$18,768</td>
       </tr>
       <tr>
         <td class="feature">$/W (DC, gross)</td>
         <td>$2.97</td>
         <td>$2.99</td>
-        <td>$3.45</td>
         <td>$3.03</td>
         <td>$3.11</td>
         <td>$3.20</td>
@@ -497,7 +452,6 @@
         <td class="feature">Panel #/Size</td>
         <td>15 × 440W (6.6 kW)</td>
         <td>15 × 450W (6.8 kW)</td>
-        <td class="partial">14 × 430W (6.02 kW)</td>
         <td>15 × 460W (6.9 kW)</td>
         <td>15 × 450W (6.75 kW)</td>
         <td>15 × 460W (6.9 kW)</td>
@@ -506,7 +460,6 @@
         <td class="feature">Panel Mfg</td>
         <td>SEG Solar</td>
         <td>CW Energy</td>
-        <td>QCELL (Q.TRON)</td>
         <td>REC (460AA)</td>
         <td>CW Energy</td>
         <td>REC (460AA)</td>
@@ -515,7 +468,6 @@
         <td class="feature">Inverter</td>
         <td>Enphase IQ8M</td>
         <td>Enphase IQ8MC</td>
-        <td>Enphase IQ8HC</td>
         <td>Enphase IQ8X</td>
         <td>Enphase IQ8MC</td>
         <td>Enphase IQ8X</td>
@@ -524,7 +476,6 @@
         <td class="feature">Year-1 Production</td>
         <td>7,207 kWh</td>
         <td>7,420 kWh</td>
-        <td>7,597 kWh</td>
         <td class="yes">8,187 kWh</td>
         <td>7,420 kWh</td>
         <td>7,735 kWh</td>
@@ -533,7 +484,6 @@
         <td class="feature">Panel Warranty</td>
         <td>30 yr</td>
         <td>30 yr</td>
-        <td>25 yr</td>
         <td>25 yr (REC ProTrust)</td>
         <td>30 yr</td>
         <td>20–25 yr*</td>
@@ -545,20 +495,17 @@
         <td>25 yr</td>
         <td>25 yr</td>
         <td>25 yr</td>
-        <td>25 yr</td>
       </tr>
       <tr>
         <td class="feature">Workmanship</td>
         <td>Per quote</td>
         <td class="yes">25 yr</td>
-        <td class="no">Not stated (subcontractor)</td>
         <td>10 yr + 10-yr production guar.</td>
         <td class="yes">25 yr Great Sky</td>
         <td class="partial">Not stated</td>
       </tr>
       <tr>
         <td class="feature">Whole-System Warranty</td>
-        <td>—</td>
         <td>—</td>
         <td>—</td>
         <td class="yes">Solar Insure 30-yr</td>
@@ -569,7 +516,6 @@
         <td class="feature">Distance</td>
         <td>1 mile</td>
         <td>1 mile</td>
-        <td class="partial">Subcontractor TBD</td>
         <td>~10 mi (Woburn)</td>
         <td>1 mile</td>
         <td>~10 mi (Woburn)</td>
@@ -578,16 +524,14 @@
         <td class="feature">Subcontracts?</td>
         <td>Not stated</td>
         <td class="yes">Never</td>
-        <td class="no">Yes — install subbed out</td>
         <td class="yes">100% in-house</td>
         <td class="yes">Never</td>
         <td class="yes">Never</td>
       </tr>
       <tr>
         <td class="feature">Reviews</td>
-        <td>5.0 EnergySage (31) / 4.9 Google (37)</td>
-        <td>5.0 (207 EnergySage / 761 Google)</td>
-        <td>Mixed (lead-gen)</td>
+        <td>5.0 ES (31) / 4.9 Google (37)</td>
+        <td>5.0 (207 / 761)</td>
         <td>4.7 Google (1,350+)</td>
         <td>5.0 (207 / 761)</td>
         <td>Limited public reviews</td>
@@ -595,7 +539,7 @@
     </tbody>
   </table>
   </div>
-  <p class="scope-note" style="margin-top: 10px;">*Viridis REC panels: standard track is 20-yr product / 25-yr power; ProTrust track (25/25/25 with labor) requires REC Certified installer — confirmation requested.</p>
+  <p class="scope-note" style="margin-top: 10px;">*Viridis REC panels: standard track is 20-yr product / 25-yr power; ProTrust track (25/25/25 with labor) requires REC Certified installer — status not confirmed.</p>
 
   <details>
     <summary>View all 10 quotes — full comparison table</summary>
@@ -752,32 +696,25 @@
     </div>
   </details>
 
-  <h2>Open Questions Before Signing</h2>
-  <ul style="font-size: 14px; line-height: 1.7;">
-    <li><strong>Boston Solar:</strong> Walk through production-estimate methodology — 8,187 kWh is ~10% above the next-highest credible estimate on the same roof. Is it an Aurora shade study? Different soiling/snow assumptions?</li>
-    <li><strong>Boston Solar:</strong> Confirm REC panel coverage track (Standard 20/25/0 vs ProTrust 25/25/25).</li>
-    <li><strong>Great Sky Solar:</strong> What exactly does the +Solar Insure version add vs Standard for the $675 delta? (Standard already has 25-yr install warranty.)</li>
-    <li><strong>Brightway Energy:</strong> Request workmanship warranty terms in writing.</li>
-    <li><strong>Evergreen Solar:</strong> Identify the actual installer, their warranty terms, and reviews. Clarify whether the contract is with Evergreen or the installer (affects warranty enforcement and MA Schedule SC math).</li>
-    <li><strong>All finalists:</strong> Confirm experience with MA condo / shared-roof installs (single contract vs. per-unit billing matters for the per-residence tax credit cap).</li>
-    <li><strong>Tax advisor:</strong> Verify per-unit MA Schedule SC math given the shared-roof / multi-owner structure.</li>
-  </ul>
-
-  <div class="recommendation">
-    <h2>Recommendation</h2>
-    <p style="margin:0 0 10px"><strong>Site visits with Boston Solar and Great Sky Solar (+Solar Insure)</strong> — effectively tied on price, equipment, and warranty. Decision likely between these two; the deciding factor is the team you'd rather work with for a 30-year support relationship.</p>
-    <p style="margin:0 0 10px"><strong>Boston Solar's edge:</strong> highest production estimate (worth understanding why), REC 460AA + IQ8X premium equipment, very large install volume.</p>
-    <p style="margin:0 0 10px"><strong>Great Sky's edge:</strong> 1 mile away, never subcontracts, 5.0 across 968 reviews, no deposit/no binding contract until materials ordered.</p>
-    <p style="margin:0 0 10px"><strong>Brightway Energy</strong> is the credible budget alternative if pushing down ~$1,400 is the priority — same neighborhood, premium panels (SEG BoB), but no whole-system warranty.</p>
-    <p style="margin:0"><strong>Evergreen Solar should not be evaluated further</strong> until they identify the actual installer behind their lead-gen proposal.</p>
+  <h2>Year-1 Production Estimate Spread (all 10 quotes)</h2>
+  <p>Same roof, ten different production estimates — a 36% spread from 6,930 to 9,465 kWh. The Boston Solar vs Great Sky difference on the front-runners is the key one to probe.</p>
+  <div class="prod-chart">
+    <div class="prod-row"><span class="prod-name">Rooftop Power</span><div class="prod-bar-container"><div class="prod-bar outlier" style="width: 100%"></div></div><span class="prod-val">9,465 kWh ⚠</span></div>
+    <div class="prod-row"><span class="prod-name">Boston Solar ⭐</span><div class="prod-bar-container"><div class="prod-bar" style="width: 86.5%"></div></div><span class="prod-val">8,187 kWh</span></div>
+    <div class="prod-row"><span class="prod-name">Mass Renewables</span><div class="prod-bar-container"><div class="prod-bar" style="width: 85.3%"></div></div><span class="prod-val">8,075 kWh</span></div>
+    <div class="prod-row"><span class="prod-name">Viridis Energy</span><div class="prod-bar-container"><div class="prod-bar" style="width: 81.7%"></div></div><span class="prod-val">7,735 kWh</span></div>
+    <div class="prod-row"><span class="prod-name">Evergreen Solar</span><div class="prod-bar-container"><div class="prod-bar" style="width: 80.3%"></div></div><span class="prod-val">7,597 kWh*</span></div>
+    <div class="prod-row"><span class="prod-name">Great Sky Solar ⭐</span><div class="prod-bar-container"><div class="prod-bar" style="width: 78.4%"></div></div><span class="prod-val">7,420 kWh</span></div>
+    <div class="prod-row"><span class="prod-name">All Energy Solar</span><div class="prod-bar-container"><div class="prod-bar" style="width: 77.1%"></div></div><span class="prod-val">7,298 kWh</span></div>
+    <div class="prod-row"><span class="prod-name">Brightway Energy</span><div class="prod-bar-container"><div class="prod-bar" style="width: 76.1%"></div></div><span class="prod-val">7,207 kWh</span></div>
+    <div class="prod-row"><span class="prod-name">My Generation Energy</span><div class="prod-bar-container"><div class="prod-bar" style="width: 73.2%"></div></div><span class="prod-val">6,930 kWh</span></div>
+    <p class="scope-note" style="margin-top: 12px;">*Evergreen is a 14-panel system; others are 15-panel. Rooftop Power claim is unrealistic for Cambridge conditions.</p>
   </div>
 
-  <p class="footer-note">Sources: 10 installer proposals dated April 16 – May 7, 2026. Detailed analysis derived from <code>2026-05-01 Solar Options Comparison.xlsx</code>.</p>
-
 </div>
 </div>
 
-<p class="footer-note" style="padding: 0 24px 24px;">Prepared for 107–109 Inman St Condo Association · May 11, 2026</p>
+<p class="footer-note" style="padding: 0 24px 24px;">Prepared for 107–109 Inman St Condo Association · Updated May 13, 2026</p>
 
 <script>
   function showTab(name) {
@@ -786,67 +723,98 @@
     window.scrollTo({top: 0, behavior: 'instant'});
   }
 
+  // Roof rot calculator
   const QUOTES = {
     sprague:   { name: "GF Sprague",     baseNoSky: 22157.91, skylightCost: 1789.52, freeRot: 24,  perSqft: 14.00, cap: 4027.56 },
     farina:    { name: "RB Farina",      baseNoSky: 26084.99, skylightCost: 2155.78, freeRot: 32,  perSqft: 110/32, cap: null },
     ranch:     { name: "Ranch Roofing",  baseNoSky: 29750.00, skylightCost: 1402.00, freeRot: 64,  perSqft: 4.00,  cap: null },
     global:    { name: "Global Roofing", baseNoSky: 42091.21, skylightCost: 0,       freeRot: 0,   perSqft: 10.00, cap: null }
   };
-
   let includeSkylights = true;
-
   function setSkylights(val) {
     includeSkylights = val;
-    document.querySelectorAll('.toggle-btn').forEach(b => {
-      b.classList.toggle('active', (b.dataset.skylights === 'true') === val);
-    });
-    recalc();
+    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.toggle('active', (b.dataset.skylights === 'true') === val));
+    recalcRot();
   }
-
   function calcRotCost(q, rotSqft) {
     const billable = Math.max(0, rotSqft - q.freeRot);
     let cost = billable * q.perSqft;
     if (q.cap !== null) cost = Math.min(cost, q.cap);
     return cost;
   }
-
   function fmt(n) { return "$" + n.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}); }
-
-  function recalc() {
+  function fmt0(n) { return "$" + Math.round(n).toLocaleString('en-US'); }
+  function recalcRot() {
     const roof = +document.getElementById('roofSize').value;
     const pct = +document.getElementById('rotPct').value;
     const rotSqft = roof * pct / 100;
     document.getElementById('roofSizeVal').textContent = roof.toLocaleString() + ' sq ft';
     document.getElementById('rotPctVal').textContent = pct + '% (' + Math.round(rotSqft) + ' sq ft)';
-
     const results = [];
     for (const key in QUOTES) {
       const q = QUOTES[key];
       const base = q.baseNoSky + (includeSkylights ? q.skylightCost : 0);
       const note = includeSkylights ? "Skylights included" : "No new skylights";
       const rotCost = calcRotCost(q, rotSqft);
-      const total = base + rotCost;
-      results.push({ key, name: q.name, base, rotCost, total, note });
+      results.push({ key, name: q.name, base, rotCost, total: base + rotCost, note });
     }
     results.sort((a, b) => a.total - b.total);
-
-    const container = document.getElementById('results');
-    container.innerHTML = results.map((r, i) => `
+    document.getElementById('results').innerHTML = results.map((r, i) => `
       <div class="result-card rank-${i+1}">
         <div class="result-vendor">${i === 0 ? '🏆 ' : ''}${r.name}</div>
         <div class="result-price">${fmt(r.total)}</div>
-        <div class="result-detail">
-          Base: ${fmt(r.base)}<br>
-          + Rot: ${fmt(r.rotCost)}<br>
-          <span style="color:#94a3b8">${r.note}</span>
-        </div>
-      </div>
-    `).join('');
+        <div class="result-detail">Base: ${fmt(r.base)}<br>+ Rot: ${fmt(r.rotCost)}<br><span style="color:#94a3b8">${r.note}</span></div>
+      </div>`).join('');
   }
+  document.getElementById('roofSize').addEventListener('input', recalcRot);
+  document.getElementById('rotPct').addEventListener('input', recalcRot);
+  recalcRot();
 
-  document.getElementById('roofSize').addEventListener('input', recalc);
-  document.getElementById('rotPct').addEventListener('input', recalc);
-  recalc();
+  // Solar unit cost split
+  const UNITS = [
+    { id: 'u1', name: '107½ Unit 1', pct: 20.66 },
+    { id: 'u2', name: '107½ Unit 2', pct: 17.57 },
+    { id: 'u3', name: '107½ Unit 3', pct: 20.27 },
+    { id: 'u4', name: '109 Unit 1',  pct: 16.41 },
+    { id: 'u5', name: '109 Unit 2',  pct: 25.10 },
+  ];
+  const SOLAR_COST = 21000;
+  const SOLAR_KWH = (8187 + 7420) / 2 - 1227; // 6576.5
+
+  function renderCheckboxes() {
+    document.getElementById('solarUnitCheckboxes').innerHTML = UNITS.map(u =>
+      `<label><input type="checkbox" data-unit="${u.id}" onchange="recalcSolar()"> ${u.name} — Not participating</label>`
+    ).join('');
+  }
+  function recalcSolar() {
+    const optedOut = new Set();
+    document.querySelectorAll('#solarUnitCheckboxes input').forEach(cb => { if (cb.checked) optedOut.add(cb.dataset.unit); });
+    const participating = UNITS.filter(u => !optedOut.has(u.id));
+    const participatingPctSum = participating.reduce((s, u) => s + u.pct, 0);
+    let rows = '', baseSum = 0, costSum = 0, kwhSum = 0;
+    UNITS.forEach(u => {
+      const outFlag = optedOut.has(u.id);
+      let effShare = outFlag ? 0 : (u.pct / participatingPctSum) * 100;
+      const cost = outFlag ? 0 : SOLAR_COST * (effShare / 100);
+      const kwh  = outFlag ? 0 : SOLAR_KWH  * (effShare / 100);
+      baseSum += u.pct;
+      costSum += cost;
+      kwhSum  += kwh;
+      rows += `<tr class="${outFlag ? 'opt-out' : ''}">
+        <td>${u.name}${outFlag ? ' (opted out)' : ''}</td>
+        <td>${u.pct.toFixed(2)}%</td>
+        <td>${outFlag ? '—' : effShare.toFixed(2) + '%'}</td>
+        <td>${outFlag ? '—' : fmt(cost)}</td>
+        <td>${outFlag ? '—' : Math.round(kwh).toLocaleString() + ' kWh'}</td>
+      </tr>`;
+    });
+    document.getElementById('solarSplitBody').innerHTML = rows;
+    document.getElementById('solarBaseSum').textContent = baseSum.toFixed(2) + '%';
+    document.getElementById('solarCostSum').textContent = fmt(costSum);
+    document.getElementById('solarKwhSum').textContent = Math.round(kwhSum).toLocaleString() + ' kWh';
+  }
+  renderCheckboxes();
+  recalcSolar();
 </script>
 </body>
 </html>

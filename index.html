@@ -379,11 +379,24 @@
   <h2>☀️ Cost &amp; Production Breakdown by Unit (≈$21,000 system)</h2>
   <p>Solar is also a shared common element. Costs and production share the same ownership percentages from Exhibit C. <strong>Tick "Not participating"</strong> for any unit that opts out — costs and production get redistributed among the remaining units in proportion to their ownership.</p>
   <div class="unit-checkboxes" id="solarUnitCheckboxes"></div>
-  <div class="unit-checkboxes" style="margin-top: -8px;">
-    <label style="font-weight: 600;">Your current electricity rate ($/kWh):
-      <input type="number" id="electricRate" value="0.34" step="0.01" min="0" max="1" style="width: 80px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; margin-left: 4px;">
+  <div class="unit-checkboxes" style="margin-top: -8px; display: block;">
+    <label style="font-weight: 600;">Your current all-in electricity rate ($/kWh):
+      <input type="number" id="electricRate" value="0.25" step="0.01" min="0" max="1" style="width: 80px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; margin-left: 4px;">
     </label>
-    <span class="scope-note" style="margin-left: 4px;">(Eversource is ~$0.32–0.38/kWh — check your latest bill)</span>
+    <details style="margin-top: 8px; box-shadow: none; padding: 8px 0;">
+      <summary style="font-size: 13px; color: #475569;">How to figure out your real rate from your Eversource bill</summary>
+      <div style="font-size: 13px; color: #475569; margin-top: 6px; line-height: 1.6;">
+        <p style="margin: 4px 0;">Don't just use the supplier's per-kWh rate (e.g. the <strong>Generation Service Charge</strong>, often around $0.149/kWh if you're on Cambridge Community Choice). That's only one piece of your cost.</p>
+        <p style="margin: 4px 0;">The relevant rate for solar savings is the <strong>all-in variable cost per kWh</strong>, which is what you actually avoid paying when solar offsets a kWh:</p>
+        <ol style="margin: 4px 0 4px 20px; padding: 0;">
+          <li>Find <strong>Subtotal Supplier Services</strong> (e.g. $88.06) and <strong>Subtotal Delivery Services</strong> (e.g. $66.09) on your bill.</li>
+          <li>Add them together, then <strong>subtract the fixed Customer Charge</strong> (e.g. $9.57). That charge is flat regardless of usage — solar can't offset it.</li>
+          <li>Divide by your kWh usage for the month (shown as "Current Usage", e.g. 591 kWh).</li>
+        </ol>
+        <p style="margin: 4px 0;">Example from a recent 109 Inman bill: ($88.06 + $66.09 − $9.57) ÷ 591 kWh ≈ <strong>$0.245/kWh</strong>. Use that number here.</p>
+        <p style="margin: 4px 0;">Your rate may differ if you're on a different supplier (Eversource Basic Service is typically higher than CCC), a different rate class (R-1 vs R1HP heat pump), or have different monthly usage relative to the fixed customer charge.</p>
+      </div>
+    </details>
   </div>
   <p class="scope-note" style="margin-top: -8px;">Production assumption: 7,803 kWh year-1 (average of Boston Solar's 8,187 and Great Sky's 7,420 estimates), minus 1,227 kWh for the 107.5 common area, leaving 6,577 kWh to split among unit owners.</p>
   <table class="split-table">

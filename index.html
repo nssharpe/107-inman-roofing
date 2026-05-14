@@ -379,6 +379,12 @@
   <h2>☀️ Cost &amp; Production Breakdown by Unit (≈$21,000 system)</h2>
   <p>Solar is also a shared common element. Costs and production share the same ownership percentages from Exhibit C. <strong>Tick "Not participating"</strong> for any unit that opts out — costs and production get redistributed among the remaining units in proportion to their ownership.</p>
   <div class="unit-checkboxes" id="solarUnitCheckboxes"></div>
+  <div class="unit-checkboxes" style="margin-top: -8px;">
+    <label style="font-weight: 600;">Your current electricity rate ($/kWh):
+      <input type="number" id="electricRate" value="0.34" step="0.01" min="0" max="1" style="width: 80px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; margin-left: 4px;">
+    </label>
+    <span class="scope-note" style="margin-left: 4px;">(Eversource is ~$0.32–0.38/kWh — check your latest bill)</span>
+  </div>
   <p class="scope-note" style="margin-top: -8px;">Production assumption: 7,803 kWh year-1 (average of Boston Solar's 8,187 and Great Sky's 7,420 estimates), minus 1,227 kWh for the 107.5 common area, leaving 6,577 kWh to split among unit owners.</p>
   <table class="split-table">
     <thead>
@@ -388,11 +394,12 @@
         <th>Effective Share</th>
         <th>Cost</th>
         <th>Year-1 kWh</th>
+        <th>Year-1 Savings</th>
       </tr>
     </thead>
     <tbody id="solarSplitBody"></tbody>
     <tfoot>
-      <tr><td>Total</td><td id="solarBaseSum">—</td><td>100.00%</td><td id="solarCostSum">—</td><td id="solarKwhSum">—</td></tr>
+      <tr><td>Total</td><td id="solarBaseSum">—</td><td>100.00%</td><td id="solarCostSum">—</td><td id="solarKwhSum">—</td><td id="solarSavSum">—</td></tr>
     </tfoot>
   </table>
 
@@ -789,31 +796,37 @@
   function recalcSolar() {
     const optedOut = new Set();
     document.querySelectorAll('#solarUnitCheckboxes input').forEach(cb => { if (cb.checked) optedOut.add(cb.dataset.unit); });
+    const rate = parseFloat(document.getElementById('electricRate').value) || 0;
     const participating = UNITS.filter(u => !optedOut.has(u.id));
     const participatingPctSum = participating.reduce((s, u) => s + u.pct, 0);
-    let rows = '', baseSum = 0, costSum = 0, kwhSum = 0;
+    let rows = '', baseSum = 0, costSum = 0, kwhSum = 0, savSum = 0;
     UNITS.forEach(u => {
       const outFlag = optedOut.has(u.id);
       let effShare = outFlag ? 0 : (u.pct / participatingPctSum) * 100;
       const cost = outFlag ? 0 : SOLAR_COST * (effShare / 100);
       const kwh  = outFlag ? 0 : SOLAR_KWH  * (effShare / 100);
+      const sav  = outFlag ? 0 : kwh * rate;
       baseSum += u.pct;
       costSum += cost;
       kwhSum  += kwh;
+      savSum  += sav;
       rows += `<tr class="${outFlag ? 'opt-out' : ''}">
         <td>${u.name}${outFlag ? ' (opted out)' : ''}</td>
         <td>${u.pct.toFixed(2)}%</td>
         <td>${outFlag ? '—' : effShare.toFixed(2) + '%'}</td>
         <td>${outFlag ? '—' : fmt(cost)}</td>
         <td>${outFlag ? '—' : Math.round(kwh).toLocaleString() + ' kWh'}</td>
+        <td>${outFlag ? '—' : fmt(sav)}</td>
       </tr>`;
     });
     document.getElementById('solarSplitBody').innerHTML = rows;
     document.getElementById('solarBaseSum').textContent = baseSum.toFixed(2) + '%';
     document.getElementById('solarCostSum').textContent = fmt(costSum);
     document.getElementById('solarKwhSum').textContent = Math.round(kwhSum).toLocaleString() + ' kWh';
+    document.getElementById('solarSavSum').textContent = fmt(savSum);
   }
   renderCheckboxes();
+  document.getElementById('electricRate').addEventListener('input', recalcSolar);
   recalcSolar();
 </script>
 </body>

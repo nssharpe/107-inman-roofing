@@ -114,7 +114,7 @@
 <body>
 <header>
   <h1>107.5 Inman St — Quote Comparisons</h1>
-  <p>Side-by-side review of contractor quotes for the condo association. Updated May 14, 2026.</p>
+  <p>Side-by-side review of contractor quotes for the condo association. Updated May 19, 2026.</p>
 </header>
 
 <nav class="tabs">
@@ -383,13 +383,13 @@
     <h3>⚠️ Important tax / incentive context for unit owners</h3>
     <ul>
       <li><strong>Federal 30% solar tax credit (25D) expired 12/31/2025.</strong> Systems placed in service in 2026+ do not qualify. Several quotes still show stale federal credit numbers — ignore those.</li>
-      <li><strong>MA Schedule SC credit is per principal residence:</strong> 15% of each owner's share of net cost, capped at $1,000 per unit. With 4 of 5 condo units owner-occupied, total MA credit lands around $2,940–$3,312 across the building.</li>
+      <li><strong>MA Schedule SC credit is per principal residence:</strong> 15% of each owner's share of net cost, capped at $1,000 per unit. With 107½ Units 1 &amp; 2 opting out, three owner-occupied units participate — total MA credit is <strong>$2,836</strong> across participating units (Units 3, 109-1, and 109-2 all qualify; 109 Unit 1 gets $836 rather than $1,000 due to its smaller ownership share).</li>
       <li><strong>Solar Insure 30-year blanket warranty</strong> covers panels, inverters, racking, labor, AND roof penetrations with $0 deductible. Critically, it covers installer/manufacturer insolvency — meaningful protection for a 30-year asset. Included in <em>both</em> front-runner quotes.</li>
     </ul>
   </div>
 
   <h2>☀️ Cost &amp; Production Breakdown by Unit (≈$21,000 system)</h2>
-  <p>Solar is also a shared common element. Costs and production share the same ownership percentages from Exhibit C. <strong>Tick "Not participating"</strong> for any unit that opts out — costs and production get redistributed among the remaining units in proportion to their ownership.</p>
+  <p>Solar is a shared common element. Costs and production use the same Exhibit C ownership percentages. <strong>107½ Units 1 &amp; 2 have opted out</strong> — their shares are redistributed among the three remaining participating units. Toggle any unit below to model alternate scenarios.</p>
   <div class="unit-checkboxes" id="solarUnitCheckboxes"></div>
   <div class="unit-checkboxes" style="margin-top: -8px; display: block;">
     <label style="font-weight: 600;">Your current all-in electricity rate ($/kWh):
@@ -410,21 +410,36 @@
       </div>
     </details>
   </div>
-  <p class="scope-note" style="margin-top: -8px;">Production assumption: 7,803 kWh year-1 (average of Boston Solar's 8,187 and Great Sky's 7,420 estimates), minus 1,227 kWh for the 107.5 common area, leaving 6,577 kWh to split among unit owners.</p>
+  <p class="scope-note" style="margin-top: -8px;">Production: 7,803 kWh year-1 avg (Boston Solar 8,187 / Great Sky 7,420), minus 1,227 kWh for 107.5 common area = 6,577 kWh for unit owners. MA Schedule SC credit: 15% of expenditure, $1,000/unit cap (owner-occupied principal residences only). SMART/REC: $2,559 total over 10 years per Great Sky Solar proposal, distributed by ownership share.</p>
   <table class="split-table">
     <thead>
       <tr>
         <th>Unit</th>
         <th>Base %</th>
         <th>Effective Share</th>
-        <th>Cost</th>
+        <th>Gross Cost</th>
+        <th>MA SC Credit</th>
+        <th>Net Cost</th>
+        <th>SMART/REC (10yr)</th>
+        <th>Net 10yr Cost</th>
         <th>Year-1 kWh</th>
         <th>Year-1 Savings</th>
       </tr>
     </thead>
     <tbody id="solarSplitBody"></tbody>
     <tfoot>
-      <tr><td>Total</td><td id="solarBaseSum">—</td><td>100.00%</td><td id="solarCostSum">—</td><td id="solarKwhSum">—</td><td id="solarSavSum">—</td></tr>
+      <tr>
+        <td>Total</td>
+        <td id="solarBaseSum">—</td>
+        <td>100.00%</td>
+        <td id="solarCostSum">—</td>
+        <td id="solarMASum">—</td>
+        <td id="solarNetMaSum">—</td>
+        <td id="solarSmartSum">—</td>
+        <td id="solarNet10Sum">—</td>
+        <td id="solarKwhSum">—</td>
+        <td id="solarSavSum">—</td>
+      </tr>
     </tfoot>
   </table>
 
@@ -746,7 +761,7 @@
 </div>
 </div>
 
-<p class="footer-note" style="padding: 0 24px 24px;">Prepared for 107–109 Inman St Condo Association · Updated May 13, 2026</p>
+<p class="footer-note" style="padding: 0 24px 24px;">Prepared for 107–109 Inman St Condo Association · Updated May 19, 2026</p>
 
 <script>
   function showTab(name) {
@@ -804,18 +819,23 @@
 
   // Solar unit cost split
   const UNITS = [
-    { id: 'u1', name: '107½ Unit 1', pct: 20.66 },
-    { id: 'u2', name: '107½ Unit 2', pct: 17.57 },
-    { id: 'u3', name: '107½ Unit 3', pct: 20.27 },
-    { id: 'u4', name: '109 Unit 1',  pct: 16.41 },
-    { id: 'u5', name: '109 Unit 2',  pct: 25.10 },
+    { id: 'u1', name: '107½ Unit 1', pct: 20.66, ownerOcc: true  },
+    { id: 'u2', name: '107½ Unit 2', pct: 17.57, ownerOcc: false },
+    { id: 'u3', name: '107½ Unit 3', pct: 20.27, ownerOcc: true  },
+    { id: 'u4', name: '109 Unit 1',  pct: 16.41, ownerOcc: true  },
+    { id: 'u5', name: '109 Unit 2',  pct: 25.10, ownerOcc: true  },
   ];
-  const SOLAR_COST = 21000;
-  const SOLAR_KWH = (8187 + 7420) / 2 - 1227; // 6576.5
+  // Units opted out by default (107½ Unit 1 & 2)
+  const DEFAULT_OPT_OUT = new Set(['u1', 'u2']);
+  const SOLAR_COST  = 21000;
+  const SOLAR_KWH   = (8187 + 7420) / 2 - 1227; // 6576.5 unit-owner kWh
+  const SMART_TOTAL = 2559;   // 10-year SMART/REC income, Great Sky proposal
+  const MA_CAP      = 1000;   // MA Schedule SC credit cap per principal residence
+  const MA_RATE     = 0.15;
 
   function renderCheckboxes() {
     document.getElementById('solarUnitCheckboxes').innerHTML = UNITS.map(u =>
-      `<label><input type="checkbox" data-unit="${u.id}" onchange="recalcSolar()"> ${u.name} — Not participating</label>`
+      `<label><input type="checkbox" data-unit="${u.id}" ${DEFAULT_OPT_OUT.has(u.id) ? 'checked' : ''} onchange="recalcSolar()"> ${u.name} — Not participating</label>`
     ).join('');
   }
   function recalcSolar() {
@@ -824,31 +844,49 @@
     const rate = parseFloat(document.getElementById('electricRate').value) || 0;
     const participating = UNITS.filter(u => !optedOut.has(u.id));
     const participatingPctSum = participating.reduce((s, u) => s + u.pct, 0);
-    let rows = '', baseSum = 0, costSum = 0, kwhSum = 0, savSum = 0;
+    let rows = '', baseSum = 0, costSum = 0, maSum = 0, netMaSum = 0, smartSum = 0, net10Sum = 0, kwhSum = 0, savSum = 0;
     UNITS.forEach(u => {
       const outFlag = optedOut.has(u.id);
-      let effShare = outFlag ? 0 : (u.pct / participatingPctSum) * 100;
-      const cost = outFlag ? 0 : SOLAR_COST * (effShare / 100);
-      const kwh  = outFlag ? 0 : SOLAR_KWH  * (effShare / 100);
-      const sav  = outFlag ? 0 : kwh * rate;
-      baseSum += u.pct;
-      costSum += cost;
-      kwhSum  += kwh;
-      savSum  += sav;
+      const effShare  = outFlag ? 0 : (u.pct / participatingPctSum) * 100;
+      const cost      = outFlag ? 0 : SOLAR_COST  * (effShare / 100);
+      const kwh       = outFlag ? 0 : SOLAR_KWH   * (effShare / 100);
+      const sav       = outFlag ? 0 : kwh * rate;
+      const maCredit  = outFlag ? 0 : (u.ownerOcc ? Math.min(cost * MA_RATE, MA_CAP) : 0);
+      const netMa     = outFlag ? 0 : cost - maCredit;
+      const smart     = outFlag ? 0 : SMART_TOTAL * (effShare / 100);
+      const net10     = outFlag ? 0 : netMa - smart;
+      baseSum  += u.pct;
+      costSum  += cost;
+      maSum    += maCredit;
+      netMaSum += netMa;
+      smartSum += smart;
+      net10Sum += net10;
+      kwhSum   += kwh;
+      savSum   += sav;
+      const d = outFlag ? '—' : null;
+      const maLabel = outFlag ? '—' : (u.ownerOcc ? `(${fmt(maCredit)})` : 'not eligible');
       rows += `<tr class="${outFlag ? 'opt-out' : ''}">
         <td>${u.name}${outFlag ? ' (opted out)' : ''}</td>
         <td>${u.pct.toFixed(2)}%</td>
         <td>${outFlag ? '—' : effShare.toFixed(2) + '%'}</td>
         <td>${outFlag ? '—' : fmt(cost)}</td>
+        <td style="color:${outFlag||!u.ownerOcc?'inherit':'#059669'}">${maLabel}</td>
+        <td>${outFlag ? '—' : fmt(netMa)}</td>
+        <td style="color:${outFlag?'inherit':'#059669'}">${outFlag ? '—' : '(' + fmt(smart) + ')'}</td>
+        <td>${outFlag ? '—' : fmt(net10)}</td>
         <td>${outFlag ? '—' : Math.round(kwh).toLocaleString() + ' kWh'}</td>
         <td>${outFlag ? '—' : fmt(sav)}</td>
       </tr>`;
     });
     document.getElementById('solarSplitBody').innerHTML = rows;
-    document.getElementById('solarBaseSum').textContent = baseSum.toFixed(2) + '%';
-    document.getElementById('solarCostSum').textContent = fmt(costSum);
-    document.getElementById('solarKwhSum').textContent = Math.round(kwhSum).toLocaleString() + ' kWh';
-    document.getElementById('solarSavSum').textContent = fmt(savSum);
+    document.getElementById('solarBaseSum').textContent  = baseSum.toFixed(2) + '%';
+    document.getElementById('solarCostSum').textContent  = fmt(costSum);
+    document.getElementById('solarMASum').textContent    = maSum   > 0 ? '(' + fmt(maSum)   + ')' : '—';
+    document.getElementById('solarNetMaSum').textContent = netMaSum > 0 ? fmt(netMaSum) : '—';
+    document.getElementById('solarSmartSum').textContent = smartSum > 0 ? '(' + fmt(smartSum) + ')' : '—';
+    document.getElementById('solarNet10Sum').textContent = net10Sum > 0 ? fmt(net10Sum) : '—';
+    document.getElementById('solarKwhSum').textContent   = Math.round(kwhSum).toLocaleString() + ' kWh';
+    document.getElementById('solarSavSum').textContent   = fmt(savSum);
   }
   renderCheckboxes();
   document.getElementById('electricRate').addEventListener('input', recalcSolar);
